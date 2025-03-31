@@ -19,44 +19,36 @@ export default function Home() {
   const [game, setGame] = useState(tabuleiro);
   const [currentCoords, setCurrentCoords] = useState({ row: 0, col: 0 });
 
+  const currentNum = game[currentCoords.row][currentCoords.col];
+
   return (
     <>
       <h1>Sudoku</h1>
-      <div className="w-[32rem] h-[32rem] grid grid-cols-9 border-2 border-[#7D909A] rounded-sm gap-0">
+      <div className="w-[32rem] h-[32rem] grid grid-cols-9 border-3 border-[#C2DFE3] rounded-sm gap-0">
         {game.map((row, iRow) =>
           row.map((e, iCol) => (
             <div
               key={`${iRow}${iCol}`}
-              className="flex items-center justify-center text-3xl border-[#9DB4C0] focus:border-red-50"
+              className="flex items-center justify-center text-3xl border-[#C2DFE3] focus:border-red-50"
               style={{
                 fontWeight:
                   e === tabuleiro[iRow][iCol] && e !== casaVazia
                     ? "bold"
                     : "normal",
-                color:
-                  e === tabuleiro[iRow][iCol] && e !== casaVazia
-                    ? "white"
-                    : "black",
                 background:
                   iRow === currentCoords.row && iCol === currentCoords.col
                     ? "#265569" // selected
-                    : iRow === currentCoords.row || iCol === currentCoords.col
-                      ? "#C2DFE3" // same row or same col
-                      : e === tabuleiro[iRow][iCol] && e !== casaVazia
-                        ? "#5C6B73" // disabled color
-                        : "#E0FBFC", // default
-                borderLeftWidth: iCol % 3 === 0 ? "2px" : "1px",
-                borderLeftColor: iCol % 3 === 0 ? "#7D909A" : "#9DB4C0",
-                borderRightWidth: (iCol + 1) % 3 === 0 ? "2px" : "1px",
-                borderRightColor: (iCol + 1) % 3 === 0 ? "#7D909A" : "#9DB4C0",
-                borderTopWidth: iRow % 3 === 0 ? "2px" : "1px",
-                borderTopColor: iRow % 3 === 0 ? "#7D909A" : "#9DB4C0",
-                borderBottomWidth: (iRow + 1) % 3 === 0 ? "2px" : "1px",
-                borderBottomColor: (iRow + 1) % 3 === 0 ? "#7D909A" : "#9DB4C0",
-                borderColor:
-                  iRow === currentCoords.row && iCol === currentCoords.col
-                    ? "#00B2FF"
-                    : "",
+                    : e === currentNum
+                      ? "#2A6F8C" // same number as selected house
+                      : iRow === currentCoords.row || iCol === currentCoords.col
+                        ? "#637F8C" // same row or same col
+                        : e === tabuleiro[iRow][iCol] && e !== casaVazia
+                          ? "#5C6B73" // disabled color
+                          : "#9DB4C0", // default
+                borderLeftWidth: iCol % 3 === 0 ? "3px" : "1px",
+                borderRightWidth: (iCol + 1) % 3 === 0 ? "3px" : "1px",
+                borderTopWidth: iRow % 3 === 0 ? "3px" : "1px",
+                borderBottomWidth: (iRow + 1) % 3 === 0 ? "3px" : "1px",
               }}
             >
               {e}
