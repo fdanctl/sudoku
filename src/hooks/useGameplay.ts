@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { emptyCell, ICoords } from "@/models/models";
+import { BoardTypes, emptyCell, ICoords } from "@/models/models";
 
-export function useGameplay(baseBoard: Array<Array<"" | number>>) {
+export function useGameplay(baseBoard: BoardTypes.Board) {
   const [game, setGame] = useState(baseBoard);
   const [currentCoords, setCurrentCoords] = useState<ICoords>({ row: 0, col: 0 });
 
