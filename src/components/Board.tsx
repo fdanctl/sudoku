@@ -4,10 +4,12 @@ export function Board({
   baseBoard,
   currentGame,
   currentCoords,
+  onClick,
 }: {
   baseBoard: BoardTypes.Board;
   currentGame: BoardTypes.Board;
   currentCoords: ICoords;
+  onClick: (row: number, col: number) => void
 }) {
 
   const currentNum = currentGame[currentCoords.row][currentCoords.col];
@@ -17,6 +19,7 @@ export function Board({
       {currentGame.map((row, iRow) =>
         row.map((e, iCol) => (
           <div
+            onClick={() => onClick(iRow, iCol)}
             key={`${iRow}${iCol}`}
             className="flex items-center justify-center text-3xl font-bold border-[#C2DFE3] focus:border-red-50"
             style={{

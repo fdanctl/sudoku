@@ -18,7 +18,7 @@ const tabuleiro = [
 ];
 
 export default function Home() {
-  const { game, currentCoords } = useGameplay(tabuleiro);
+  const { game, currentCoords, handleClick } = useGameplay(tabuleiro);
 
   return (
     <>
@@ -28,6 +28,7 @@ export default function Home() {
           baseBoard={tabuleiro}
           currentGame={game}
           currentCoords={currentCoords}
+          onClick={handleClick}
         />
         <div>
           <p>Settings</p>

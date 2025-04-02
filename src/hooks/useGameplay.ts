@@ -3,10 +3,16 @@ import { BoardTypes, emptyCell, ICoords } from "@/models/models";
 
 export function useGameplay(baseBoard: BoardTypes.Board) {
   const [game, setGame] = useState(baseBoard);
-  const [currentCoords, setCurrentCoords] = useState<ICoords>({ row: 0, col: 0 });
-
+  const [currentCoords, setCurrentCoords] = useState<ICoords>({
+    row: 0,
+    col: 0,
+  });
 
   const currentNum = game[currentCoords.row][currentCoords.col];
+
+  const handleClick = (row: number, col: number) => {
+    setCurrentCoords({ row: row, col: col });
+  };
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -32,7 +38,6 @@ export function useGameplay(baseBoard: BoardTypes.Board) {
         case "l":
           setCurrentCoords((ps) => ({ ...ps, col: Math.min(8, ps.col + 1) }));
           break;
-
         case "backspace":
         case "delete":
           setGame((ps) =>
@@ -76,5 +81,6 @@ export function useGameplay(baseBoard: BoardTypes.Board) {
   return {
     game,
     currentCoords,
+    handleClick,
   };
 }
