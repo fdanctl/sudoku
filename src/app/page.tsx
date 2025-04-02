@@ -3,6 +3,7 @@ import { emptyCell } from "@/models/models";
 
 import { useGameplay } from "@/hooks/useGameplay";
 import { Board } from "@/components/Board";
+import { Button } from "@/components/Button";
 
 const tabuleiro = [
   [5, 3, emptyCell, emptyCell, 7, emptyCell, emptyCell, emptyCell, emptyCell],
@@ -22,11 +23,20 @@ export default function Home() {
   return (
     <>
       <h1 className="text-pink-200 text-4xl">Sudoku</h1>
-      <Board
-        baseBoard={tabuleiro}
-        currentGame={game}
-        currentCoords={currentCoords}
-      />
+      <div className="flex">
+        <Board
+          baseBoard={tabuleiro}
+          currentGame={game}
+          currentCoords={currentCoords}
+        />
+        <div>
+          <p>Settings</p>
+          <input type="checkbox" name="highlightConflicts" id="highlightConflicts" />
+          <label htmlFor="highlightConflicts">Highlight Conflicts</label>
+        </div>
+        <Button text="Reset" onClick={() => console.log("reset")} />
+        <Button text="Show Answer" onClick={() => console.log("show")} />
+      </div>
     </>
   );
 }
