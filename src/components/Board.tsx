@@ -5,12 +5,14 @@ export function Board({
   baseBoard,
   currentGame,
   currentCoords,
+  candidates,
   onClick,
-  settings
+  settings,
 }: {
   baseBoard: BoardTypes.Board;
   currentGame: BoardTypes.Board;
   currentCoords: ICoords;
+  candidates: boolean[][][];
   onClick: (row: number, col: number) => void;
   settings: ISettings;
 }) {
@@ -47,9 +49,19 @@ export function Board({
               borderRightWidth: (iCol + 1) % 3 === 0 ? "3px" : "1px",
               borderTopWidth: iRow % 3 === 0 ? "3px" : "1px",
               borderBottomWidth: (iRow + 1) % 3 === 0 ? "3px" : "1px",
+
+              display: e === emptyCell ? "grid" : "flex",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gridTemplateRows: "repeat(3, 1fr)",
             }}
           >
-            {e}
+            {e !== emptyCell
+              ? e
+              : candidates[iRow][iCol].map((bool, i) => (
+                <p className="text-[0.6rem] flex items-center justify-center">
+                  {bool ? i + 1: emptyCell}
+                </p>
+              ))}
           </div>
         )),
       )}

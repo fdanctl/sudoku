@@ -31,7 +31,7 @@ const game = {
 };
 
 export default function Home() {
-  const { currentGame, setCurrentGame, currentCoords, handleClick } =
+  const { currentGame, setCurrentGame, currentCoords, handleClick, candidates } =
     useGameplay(game.board);
   const { settings, setSettings } = useSettings();
 
@@ -43,6 +43,7 @@ export default function Home() {
           baseBoard={game.board}
           currentGame={currentGame}
           currentCoords={currentCoords}
+          candidates={candidates}
           onClick={handleClick}
           settings={settings}
         />

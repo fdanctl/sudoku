@@ -7,6 +7,10 @@ export function useGameplay(baseBoard: BoardTypes.Board) {
     row: 0,
     col: 0,
   });
+  const [candidateMode, setCandidateMode] = useState(false);
+  const [candidates, setCandidates] = useState(
+    baseBoard.map((row) => row.map((e) => Array(9).fill(false))),
+  );
 
   const currentNum = currentGame[currentCoords.row][currentCoords.col];
 
@@ -14,7 +18,15 @@ export function useGameplay(baseBoard: BoardTypes.Board) {
     setCurrentCoords({ row: row, col: col });
   };
 
+
   useEffect(() => {
+    const handleKeyUp = (event: KeyboardEvent) => {
+      if (event.key === "Shift") {
+        console.log("up")
+        setCandidateMode(false);
+      }
+    };
+
     const handleKeyDown = (event: KeyboardEvent) => {
       console.log(event.key.toLowerCase());
       switch (event.key.toLowerCase()) {
@@ -38,6 +50,9 @@ export function useGameplay(baseBoard: BoardTypes.Board) {
         case "l":
           setCurrentCoords((ps) => ({ ...ps, col: Math.min(8, ps.col + 1) }));
           break;
+        case "shift":
+          setCandidateMode(true);
+          break;
         case "backspace":
         case "delete":
           setCurrentGame((ps) =>
@@ -54,34 +69,47 @@ export function useGameplay(baseBoard: BoardTypes.Board) {
           if (
             (currentNum === emptyCell ||
               currentNum !== baseBoard[currentCoords.row][currentCoords.col]) &&
-            /[1-9]/.test(event.key)
+              event.code.match(/[1-9]/)
           ) {
-            console.log(currentCoords);
+            console.log(event.code)
+            if (candidateMode) {
+              setCandidates((ps) =>
+                ps.map((row, i) =>
+                  row.map((e, j) =>
+                    i === currentCoords.row && j === currentCoords.col
+                      ? e.map((bool, x) => x === Number(event.code.replace(/[a-zA-Z]/g, "")) - 1 ? !bool : bool)
+                      : e,
+                  )))
+          } else {
             setCurrentGame((ps) =>
               ps.map((row, i) =>
                 row.map((e, j) =>
                   i === currentCoords.row && j === currentCoords.col
-                    ? Number(event.key)
+                    ? Number(event.code.replace(/[a-zA-Z]/g,""))
                     : e,
                 ),
               ),
             );
           }
-          break;
       }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [currentCoords]);
-
-  return {
-    currentGame,
-    setCurrentGame,
-    currentCoords,
-    handleClick,
+      break;
+    }
   };
+
+  document.addEventListener("keyup", handleKeyUp);
+  document.addEventListener("keydown", handleKeyDown);
+
+  return () => {
+    document.removeEventListener("keyup", handleKeyUp);
+    document.removeEventListener("keydown", handleKeyDown);
+  };
+}, [currentCoords, candidateMode, candidates]);
+
+return {
+  currentGame,
+  setCurrentGame,
+  currentCoords,
+  candidates,
+  handleClick,
+};
 }
