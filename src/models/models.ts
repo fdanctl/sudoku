@@ -9,4 +9,14 @@ export interface ICoords {
   col: number,
 }
 
+export interface ISettings {
+  highlightConflicts: boolean,
+  highlightRow: boolean,
+  highlightCol: boolean,
+  highlightBox: boolean,
+  highlightIdenticalNums: boolean,
+  showTimer: boolean,
+  showErrorCounter: boolean,
+}
+
 export const emptyCell: BoardTypes.EmptyCell = "";

@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { BoardTypes, emptyCell, ICoords } from "@/models/models";
 
 export function useGameplay(baseBoard: BoardTypes.Board) {
-  const [game, setGame] = useState(baseBoard);
+  const [currentGame, setCurrentGame] = useState(baseBoard);
   const [currentCoords, setCurrentCoords] = useState<ICoords>({
     row: 0,
     col: 0,
   });
 
-  const currentNum = game[currentCoords.row][currentCoords.col];
+  const currentNum = currentGame[currentCoords.row][currentCoords.col];
 
   const handleClick = (row: number, col: number) => {
     setCurrentCoords({ row: row, col: col });
@@ -40,7 +40,7 @@ export function useGameplay(baseBoard: BoardTypes.Board) {
           break;
         case "backspace":
         case "delete":
-          setGame((ps) =>
+          setCurrentGame((ps) =>
             ps.map((row, i) =>
               row.map((e, j) =>
                 i === currentCoords.row && j === currentCoords.col
@@ -57,7 +57,7 @@ export function useGameplay(baseBoard: BoardTypes.Board) {
             /[1-9]/.test(event.key)
           ) {
             console.log(currentCoords);
-            setGame((ps) =>
+            setCurrentGame((ps) =>
               ps.map((row, i) =>
                 row.map((e, j) =>
                   i === currentCoords.row && j === currentCoords.col
@@ -79,7 +79,8 @@ export function useGameplay(baseBoard: BoardTypes.Board) {
   }, [currentCoords]);
 
   return {
-    game,
+    currentGame,
+    setCurrentGame,
     currentCoords,
     handleClick,
   };

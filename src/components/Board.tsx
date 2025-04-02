@@ -1,17 +1,19 @@
-import { BoardTypes, emptyCell, ICoords } from "@/models/models";
+import { useSettings } from "@/hooks/useSettings";
+import { BoardTypes, emptyCell, ICoords, ISettings } from "@/models/models";
 
 export function Board({
   baseBoard,
   currentGame,
   currentCoords,
   onClick,
+  settings
 }: {
   baseBoard: BoardTypes.Board;
   currentGame: BoardTypes.Board;
   currentCoords: ICoords;
-  onClick: (row: number, col: number) => void
+  onClick: (row: number, col: number) => void;
+  settings: ISettings;
 }) {
-
   const currentNum = currentGame[currentCoords.row][currentCoords.col];
 
   return (
@@ -26,14 +28,17 @@ export function Board({
               background:
                 iRow === currentCoords.row && iCol === currentCoords.col
                   ? "#265569" // selected
-                  : e === currentNum && e !== emptyCell
+                  : e === currentNum &&
+                    e !== emptyCell &&
+                    settings.highlightIdenticalNums
                     ? "#2A6F8C" // same number as selected house
-                    : iRow === currentCoords.row ||
-                        iCol === currentCoords.col ||
-                        (Math.floor(iRow / 3) ===
-                          Math.floor(currentCoords.row / 3) &&
-                          Math.floor(iCol / 3) ===
-                            Math.floor(currentCoords.col / 3))
+                    : (settings.highlightRow && iRow === currentCoords.row) ||
+                      (settings.highlightCol && iCol === currentCoords.col) ||
+                      (settings.highlightBox &&
+                        Math.floor(iRow / 3) ===
+                        Math.floor(currentCoords.row / 3) &&
+                        Math.floor(iCol / 3) ===
+                        Math.floor(currentCoords.col / 3))
                       ? "#637F8C" // same row, same col or same block
                       : e === baseBoard[iRow][iCol] && e !== emptyCell
                         ? "#5C6B73" // disabled color
