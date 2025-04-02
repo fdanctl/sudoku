@@ -1,4 +1,3 @@
-import { useSettings } from "@/hooks/useSettings";
 import { BoardTypes, emptyCell, ICoords, ISettings } from "@/models/models";
 
 export function Board({
@@ -58,8 +57,11 @@ export function Board({
             {e !== emptyCell
               ? e
               : candidates[iRow][iCol].map((bool, i) => (
-                <p className="text-[0.6rem] flex items-center justify-center">
-                  {bool ? i + 1: emptyCell}
+                <p
+                  key={`${iRow}${iCol}${i}`}
+                  className="text-[0.6rem] flex items-center justify-center"
+                >
+                  {bool ? i + 1 : emptyCell}
                 </p>
               ))}
           </div>

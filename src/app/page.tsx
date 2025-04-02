@@ -31,9 +31,16 @@ const game = {
 };
 
 export default function Home() {
-  const { currentGame, setCurrentGame, currentCoords, handleClick, candidates } =
-    useGameplay(game.board);
-  const { settings, setSettings } = useSettings();
+  const {
+    currentGame,
+    setCurrentGame,
+    currentCoords,
+    handleClick,
+    candidates,
+    resetBoard,
+    showSolution,
+  } = useGameplay(game);
+  const { settings, handleChangeSetting } = useSettings();
 
   return (
     <>
@@ -52,14 +59,13 @@ export default function Home() {
           <input
             type="checkbox"
             onChange={() => {
-              console.log("yellow");
-              setSettings((ps) => ({ ...ps, highlightBox: !ps.highlightBox }));
+              handleChangeSetting("highlightBox")
             }}
             checked={settings.highlightBox}
           />
         </div>
-        <Button text="Reset" onClick={() => setCurrentGame(game.board)} />
-        <Button text="check" onClick={() => console.log(settings)} />
+        <Button text="Reset" onClick={resetBoard} />
+        <Button text="check" onClick={showSolution} />
         <Button
           text="Show Answer"
           onClick={() => setCurrentGame(game.solution)}

@@ -12,5 +12,9 @@ export function useSettings() {
     showErrorCounter: true,
   });
 
-  return { settings, setSettings };
+  const handleChangeSetting = (setting: keyof ISettings) => {
+    setSettings((ps) => ({ ...ps, [setting]: !ps[setting] }));
+  };
+
+  return { settings, handleChangeSetting };
 }
