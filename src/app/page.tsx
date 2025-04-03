@@ -4,6 +4,7 @@ import { useGameplay } from "@/hooks/useGameplay";
 import { Board } from "@/components/Board";
 import { Button } from "@/components/Button";
 import { useSettings } from "@/hooks/useSettings";
+import { useCounter } from "@/hooks/useCounter";
 
 const game = {
   board: [
@@ -41,6 +42,7 @@ export default function Home() {
     showSolution,
   } = useGameplay(game);
   const { settings, handleChangeSetting } = useSettings();
+  const { counter, startStopCounter, resetCounter } = useCounter();
 
   return (
     <>
@@ -55,11 +57,14 @@ export default function Home() {
           settings={settings}
         />
         <div>
+          <p>Counter: {counter.counter}</p>
+          <button onClick={startStopCounter}>Start/Stop</button>
+          <button onClick={resetCounter}>Reset</button>
           <p>Settings</p>
           <input
             type="checkbox"
             onChange={() => {
-              handleChangeSetting("highlightBox")
+              handleChangeSetting("highlightBox");
             }}
             checked={settings.highlightBox}
           />
