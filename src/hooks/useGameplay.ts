@@ -12,7 +12,7 @@ export function useGameplay(game: {
   });
   const [candidateMode, setCandidateMode] = useState(false);
   const [candidates, setCandidates] = useState(
-    game.board.map((row) => row.map((e) => Array(9).fill(false))),
+    game.board.map((row) => row.map(() => Array(9).fill(false))),
   );
 
   const currentNum = currentGame[currentCoords.row][currentCoords.col];
@@ -24,7 +24,7 @@ export function useGameplay(game: {
   const resetBoard = () => {
     setCurrentGame(game.board);
     setCandidates(
-      game.board.map((row) => row.map((e) => Array(9).fill(false))),
+      game.board.map((row) => row.map(() => Array(9).fill(false))),
     );
   };
 
