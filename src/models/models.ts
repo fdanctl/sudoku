@@ -17,6 +17,7 @@ export interface ISettings {
   highlightIdenticalNums: boolean,
   showTimer: boolean,
   showErrorCounter: boolean,
+  autoCandidate: boolean,
 }
 
 export const emptyCell: BoardTypes.EmptyCell = "";

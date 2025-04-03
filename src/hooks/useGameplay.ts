@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
 import { BoardTypes, emptyCell, ICoords } from "@/models/models";
+import { seeConflicts } from "@/lib/utils";
 
 export function useGameplay(game: {
   board: BoardTypes.Board;
   solution: Number[][];
 }) {
-  const [currentGame, setCurrentGame] = useState(game.board);
+  const [currentGame, setCurrentGame] = useState<BoardTypes.Board>(game.board);
   const [currentCoords, setCurrentCoords] = useState<ICoords>({
     row: 0,
     col: 0,
   });
-  const [candidateMode, setCandidateMode] = useState(false);
-  const [candidates, setCandidates] = useState(
+  const [candidateMode, setCandidateMode] = useState<boolean>(false);
+  const [candidates, setCandidates] = useState<boolean[][][]>(
     game.board.map((row) => row.map(() => Array(9).fill(false))),
+  );
+
+  const [conflicts, setConflicts] = useState<number[][][]>(
+    currentGame.map((row, iRow) =>
+      row.map((_, iCol) => seeConflicts(currentGame, { row: iRow, col: iCol })),
+    ),
   );
 
   const currentNum = currentGame[currentCoords.row][currentCoords.col];
@@ -23,9 +30,7 @@ export function useGameplay(game: {
 
   const resetBoard = () => {
     setCurrentGame(game.board);
-    setCandidates(
-      game.board.map((row) => row.map(() => Array(9).fill(false))),
-    );
+    setCandidates(game.board.map((row) => row.map(() => Array(9).fill(false))));
   };
 
   const showSolution = () => {
@@ -41,6 +46,16 @@ export function useGameplay(game: {
       ),
     );
   };
+
+  useEffect(() => {
+    setConflicts(
+      currentGame.map((row, iRow) =>
+        row.map((_, iCol) =>
+          seeConflicts(currentGame, { row: iRow, col: iCol }),
+        ),
+      ),
+    );
+  }, [currentGame]);
 
   useEffect(() => {
     const handleKeyUp = (event: KeyboardEvent) => {
@@ -86,11 +101,12 @@ export function useGameplay(game: {
             (currentNum === emptyCell ||
               currentNum !==
               game.board[currentCoords.row][currentCoords.col]) &&
-            event.code.match(/[1-9]/) && !event.code.match(/[fF]/)
+            event.code.match(/[1-9]/) &&
+            !event.code.match(/[fF]/)
           ) {
             console.log(event.code);
             if (candidateMode) {
-              deleteCell()
+              deleteCell();
               setCandidates((ps) =>
                 ps.map((row, i) =>
                   row.map((e, j) =>
@@ -137,5 +153,6 @@ export function useGameplay(game: {
     handleClick,
     resetBoard,
     showSolution,
+    conflicts,
   };
 }

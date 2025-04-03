@@ -40,6 +40,7 @@ export default function Home() {
     candidates,
     resetBoard,
     showSolution,
+    conflicts,
   } = useGameplay(game);
   const { settings, handleChangeSetting } = useSettings();
   const { counter, startStopCounter, resetCounter } = useCounter();
@@ -52,7 +53,18 @@ export default function Home() {
           baseBoard={game.board}
           currentGame={currentGame}
           currentCoords={currentCoords}
-          candidates={candidates}
+          candidates={
+            settings.autoCandidate
+              ? conflicts.map((row) =>
+                row.map((e) =>
+                  Array(9)
+                    .fill(true)
+                    .map((_, i) => !e.includes(i + 1)),
+                ),
+              )
+              : candidates
+          }
+          conflicts={conflicts}
           onClick={handleClick}
           settings={settings}
         />
@@ -68,6 +80,16 @@ export default function Home() {
             }}
             checked={settings.highlightBox}
           />
+          <input
+            type="checkbox"
+            onChange={() => {
+              handleChangeSetting("autoCandidate");
+            }}
+            checked={settings.autoCandidate}
+            id="autoCandidate"
+            name="autoCandidate"
+          />
+          <label htmlFor="autoCandidate">auto-candidate</label>
         </div>
         <Button text="Reset" onClick={resetBoard} />
         <Button text="check" onClick={showSolution} />

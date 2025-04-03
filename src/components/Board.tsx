@@ -5,6 +5,7 @@ export function Board({
   currentGame,
   currentCoords,
   candidates,
+  conflicts,
   onClick,
   settings,
 }: {
@@ -12,6 +13,7 @@ export function Board({
   currentGame: BoardTypes.Board;
   currentCoords: ICoords;
   candidates: boolean[][][];
+  conflicts: number[][][];
   onClick: (row: number, col: number) => void;
   settings: ISettings;
 }) {
@@ -26,6 +28,7 @@ export function Board({
             key={`${iRow}${iCol}`}
             className="flex items-center justify-center text-3xl font-bold border-[#C2DFE3] focus:border-red-50"
             style={{
+              color: e !== emptyCell && conflicts[iRow][iCol].includes(e) ? "red" : "white",
               background:
                 iRow === currentCoords.row && iCol === currentCoords.col
                   ? "#265569" // selected

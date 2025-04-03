@@ -10,6 +10,7 @@ export function useSettings() {
     highlightIdenticalNums: true,
     showTimer: true,
     showErrorCounter: true,
+    autoCandidate: false,
   });
 
   const handleChangeSetting = (setting: keyof ISettings) => {
