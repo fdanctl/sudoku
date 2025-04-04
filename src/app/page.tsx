@@ -1,10 +1,12 @@
 "use client";
-import { emptyCell } from "@/models/models";
+import { emptyCell, ISettings } from "@/models/models";
 import { useGameplay } from "@/hooks/useGameplay";
 import { Board } from "@/components/Board";
 import { Button } from "@/components/Button";
 import { useSettings } from "@/hooks/useSettings";
 import { useCounter } from "@/hooks/useCounter";
+import { camelCaseToTitleCase } from "@/lib/utils";
+import { InputWithLabel } from "@/components/InputWithLabel";
 
 const game = {
   board: [
@@ -72,24 +74,19 @@ export default function Home() {
           <p>Counter: {counter.counter}</p>
           <button onClick={startStopCounter}>Start/Stop</button>
           <button onClick={resetCounter}>Reset</button>
-          <p>Settings</p>
-          <input
-            type="checkbox"
-            onChange={() => {
-              handleChangeSetting("highlightBox");
-            }}
-            checked={settings.highlightBox}
-          />
-          <input
-            type="checkbox"
-            onChange={() => {
-              handleChangeSetting("autoCandidate");
-            }}
-            checked={settings.autoCandidate}
-            id="autoCandidate"
-            name="autoCandidate"
-          />
-          <label htmlFor="autoCandidate">auto-candidate</label>
+          <div className="flex flex-col">
+            <p>Settings</p>
+            {Object.keys(settings).map((key) => (
+              <InputWithLabel
+                key={key}
+                checked={settings[key as keyof ISettings]}
+                id={key}
+                name={key}
+                labelText={camelCaseToTitleCase(key)}
+                onChange={() => handleChangeSetting(key as keyof ISettings)}
+              />
+            ))}
+          </div>
         </div>
         <Button text="Reset" onClick={resetBoard} />
         <Button text="check" onClick={showSolution} />
