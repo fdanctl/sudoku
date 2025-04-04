@@ -38,11 +38,12 @@ export default function Home() {
     currentGame,
     setCurrentGame,
     currentCoords,
-    handleClick,
     candidates,
+    conflicts,
+    errorsCounter,
+    handleClick,
     resetBoard,
     showSolution,
-    conflicts,
   } = useGameplay(game);
   const { settings, handleChangeSetting } = useSettings();
   const { counter, startStopCounter, resetCounter } = useCounter();
@@ -72,6 +73,7 @@ export default function Home() {
         />
         <div>
           <p>Counter: {counter.counter}</p>
+          <p>Errors: {errorsCounter}</p>
           <button onClick={startStopCounter}>Start/Stop</button>
           <button onClick={resetCounter}>Reset</button>
           <div className="flex flex-col">

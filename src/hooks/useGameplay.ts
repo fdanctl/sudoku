@@ -21,6 +21,7 @@ export function useGameplay(game: {
       row.map((_, iCol) => seeConflicts(currentGame, { row: iRow, col: iCol })),
     ),
   );
+  const [errorsCounter, setErrorsCounter] = useState<number>(0)
 
   const currentNum = currentGame[currentCoords.row][currentCoords.col];
 
@@ -105,6 +106,7 @@ export function useGameplay(game: {
             !event.code.match(/[fF]/)
           ) {
             console.log(event.code);
+            const numberPressed = Number(event.code.replace(/[a-zA-Z]/g, ""))
             if (candidateMode) {
               deleteCell();
               setCandidates((ps) =>
@@ -112,7 +114,7 @@ export function useGameplay(game: {
                   row.map((e, j) =>
                     i === currentCoords.row && j === currentCoords.col
                       ? e.map((bool, x) =>
-                        x === Number(event.code.replace(/[a-zA-Z]/g, "")) - 1
+                        x === numberPressed - 1
                           ? !bool
                           : bool,
                       )
@@ -125,11 +127,15 @@ export function useGameplay(game: {
                 ps.map((row, i) =>
                   row.map((e, j) =>
                     i === currentCoords.row && j === currentCoords.col
-                      ? Number(event.code.replace(/[a-zA-Z]/g, ""))
+                      ? numberPressed
                       : e,
                   ),
                 ),
               );
+              // see if error
+              if (conflicts[currentCoords.row][currentCoords.col].includes(numberPressed)) {
+                setErrorsCounter((ps) => ps + 1)
+              }
             }
           }
           break;
@@ -150,9 +156,10 @@ export function useGameplay(game: {
     setCurrentGame,
     currentCoords,
     candidates,
+    conflicts,
+    errorsCounter,
     handleClick,
     resetBoard,
     showSolution,
-    conflicts,
   };
 }
