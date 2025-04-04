@@ -20,7 +20,7 @@ export function Board({
   const currentNum = currentGame[currentCoords.row][currentCoords.col];
 
   return (
-    <div className="w-[32rem] h-[32rem] grid grid-cols-9 border-3 border-[#C2DFE3] rounded-sm gap-0">
+    <div className="w-[32rem] h-[32rem] grid grid-cols-9 border-3 border-[#C2DFE3] rounded-sm gap-0 select-none">
       {currentGame.map((row, iRow) =>
         row.map((e, iCol) => (
           <div

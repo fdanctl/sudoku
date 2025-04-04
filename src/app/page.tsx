@@ -4,7 +4,7 @@ import { useGameplay } from "@/hooks/useGameplay";
 import { Board } from "@/components/Board";
 import { Button } from "@/components/Button";
 import { useSettings } from "@/hooks/useSettings";
-import { useCounter } from "@/hooks/useCounter";
+import { useTimer } from "@/hooks/useTimer";
 import { camelCaseToTitleCase } from "@/lib/utils";
 import { InputWithLabel } from "@/components/InputWithLabel";
 
@@ -46,7 +46,7 @@ export default function Home() {
     showSolution,
   } = useGameplay(game);
   const { settings, handleChangeSetting } = useSettings();
-  const { counter, startStopCounter, resetCounter } = useCounter();
+  const { timer, startStopTimer, resetTimer } = useTimer();
 
   return (
     <>
@@ -73,18 +73,18 @@ export default function Home() {
         />
         <div>
           <p>
-            Counter: {Math.floor(counter.counter / 60)}:
+            Timer: {Math.floor(timer.timer / 60)}:
             {(
-              counter.counter -
-              60 * Math.floor(counter.counter / 60)
+              timer.timer -
+              60 * Math.floor(timer.timer / 60)
             ).toLocaleString("en-US", {
               minimumIntegerDigits: 2,
               useGrouping: false,
             })}
           </p>
           <p>Errors: {errorsCounter}</p>
-          <button onClick={startStopCounter}>Start/Stop</button>
-          <button onClick={resetCounter}>Reset</button>
+          <button onClick={startStopTimer}>Start/Stop</button>
+          <button onClick={resetTimer}>Reset</button>
           <div className="flex flex-col">
             <p>Settings</p>
             {Object.keys(settings).map((key) => (
