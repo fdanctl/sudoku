@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export function useCounter() {
-  const [counter, setCounter] = useState({ active: false, counter: 0 });
+  const [counter, setCounter] = useState({ active: true, counter: 0 });
 
   const startStopCounter = () => {
     console.log(counter.active);

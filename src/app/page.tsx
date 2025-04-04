@@ -72,7 +72,16 @@ export default function Home() {
           settings={settings}
         />
         <div>
-          <p>Counter: {counter.counter}</p>
+          <p>
+            Counter: {Math.floor(counter.counter / 60)}:
+            {(
+              counter.counter -
+              60 * Math.floor(counter.counter / 60)
+            ).toLocaleString("en-US", {
+              minimumIntegerDigits: 2,
+              useGrouping: false,
+            })}
+          </p>
           <p>Errors: {errorsCounter}</p>
           <button onClick={startStopCounter}>Start/Stop</button>
           <button onClick={resetCounter}>Reset</button>
