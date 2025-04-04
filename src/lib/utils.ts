@@ -1,7 +1,6 @@
 import { BoardTypes, emptyCell, ICoords } from "@/models/models";
 
 export const seeConflicts = (board: BoardTypes.Board, coords: ICoords) => {
-
   // collumn
   const collumn = [];
   for (let i = 0; i < 9; i++) {
@@ -29,4 +28,12 @@ export const seeConflicts = (board: BoardTypes.Board, coords: ICoords) => {
     .concat(collumn as BoardTypes.Cell[])
     .concat(block as BoardTypes.Cell[])
     .filter((e) => e !== emptyCell);
+};
+
+export const capitalize = (s: string) => {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
+
+export const camelCaseToTitleCase = (string: string) => {
+  return capitalize(string.replaceAll(/[A-Z]/g, " $&"));
 };
