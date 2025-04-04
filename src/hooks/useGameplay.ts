@@ -11,7 +11,6 @@ export function useGameplay(game: {
     row: 0,
     col: 0,
   });
-  const [candidateMode, setCandidateMode] = useState<boolean>(false);
   const [candidates, setCandidates] = useState<boolean[][][]>(
     game.board.map((row) => row.map(() => Array(9).fill(false))),
   );
@@ -59,12 +58,6 @@ export function useGameplay(game: {
   }, [currentGame]);
 
   useEffect(() => {
-    const handleKeyUp = (event: KeyboardEvent) => {
-      if (event.key === "Shift") {
-        console.log("up");
-        setCandidateMode(false);
-      }
-    };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       console.log(event.key.toLowerCase());
@@ -89,9 +82,6 @@ export function useGameplay(game: {
         case "l":
           setCurrentCoords((ps) => ({ ...ps, col: Math.min(8, ps.col + 1) }));
           break;
-        case "shift":
-          setCandidateMode(true);
-          break;
         case "backspace":
         case "delete":
           deleteCell();
@@ -107,7 +97,7 @@ export function useGameplay(game: {
           ) {
             console.log(event.code);
             const numberPressed = Number(event.code.replace(/[a-zA-Z]/g, ""))
-            if (candidateMode) {
+            if (event.shiftKey) {
               deleteCell();
               setCandidates((ps) =>
                 ps.map((row, i) =>
@@ -142,14 +132,12 @@ export function useGameplay(game: {
       }
     };
 
-    document.addEventListener("keyup", handleKeyUp);
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener("keyup", handleKeyUp);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [currentCoords, candidateMode, candidates]);
+  }, [currentCoords, candidates]);
 
   return {
     currentGame,
