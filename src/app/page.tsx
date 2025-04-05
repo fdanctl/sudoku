@@ -36,7 +36,6 @@ const game = {
 export default function Home() {
   const {
     currentGame,
-    setCurrentGame,
     currentCoords,
     candidates,
     conflicts,
@@ -100,11 +99,8 @@ export default function Home() {
           </div>
         </div>
         <Button text="Reset" onClick={resetBoard} />
-        <Button text="check" onClick={showSolution} />
-        <Button
-          text="Show Answer"
-          onClick={() => setCurrentGame(game.solution)}
-        />
+        <Button text="check" onClick={() => console.log("I'm only a test button :(")} />
+        <Button text="Show Answer" onClick={showSolution} />
       </div>
     </>
   );

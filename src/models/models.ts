@@ -20,4 +20,10 @@ export interface ISettings {
   autoCandidate: boolean,
 }
 
+export interface IGameHistory {
+  coords: ICoords;
+  previousCell: BoardTypes.Cell;
+  newCell: BoardTypes.Cell;
+}
+
 export const emptyCell: BoardTypes.EmptyCell = "";

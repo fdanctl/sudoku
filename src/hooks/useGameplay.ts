@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BoardTypes, emptyCell, ICoords } from "@/models/models";
+import { BoardTypes, emptyCell, ICoords, IGameHistory } from "@/models/models";
 import { seeConflicts } from "@/lib/utils";
 
 export function useGameplay(game: {
@@ -20,7 +20,8 @@ export function useGameplay(game: {
       row.map((_, iCol) => seeConflicts(currentGame, { row: iRow, col: iCol })),
     ),
   );
-  const [errorsCounter, setErrorsCounter] = useState<number>(0)
+  const [errorsCounter, setErrorsCounter] = useState<number>(0);
+  const [gameHistory, setGameHistory] = useState<IGameHistory[]>([]);
 
   const currentNum = currentGame[currentCoords.row][currentCoords.col];
 
@@ -45,6 +46,14 @@ export function useGameplay(game: {
         ),
       ),
     );
+    setGameHistory((ps) => [
+      {
+        coords: currentCoords,
+        previousCell: currentGame[currentCoords.row][currentCoords.col],
+        newCell: emptyCell,
+      },
+      ...ps,
+    ]);
   };
 
   useEffect(() => {
@@ -58,7 +67,6 @@ export function useGameplay(game: {
   }, [currentGame]);
 
   useEffect(() => {
-
     const handleKeyDown = (event: KeyboardEvent) => {
       console.log(event.key.toLowerCase());
       switch (event.key.toLowerCase()) {
@@ -89,6 +97,23 @@ export function useGameplay(game: {
 
         default:
           if (
+            (event.key === "u" && gameHistory.length > 0) ||
+            (event.ctrlKey && event.key === "z" && gameHistory.length > 0)
+          ) {
+            setCurrentCoords(gameHistory[0].coords);
+            setCurrentGame((ps) =>
+              ps.map((row, i) =>
+                row.map((e, j) =>
+                  i === gameHistory[0].coords.row &&
+                    j === gameHistory[0].coords.col
+                    ? gameHistory[0].previousCell
+                    : e,
+                ),
+              ),
+            );
+            setGameHistory((ps) => [...ps].slice(1));
+          }
+          if (
             (currentNum === emptyCell ||
               currentNum !==
               game.board[currentCoords.row][currentCoords.col]) &&
@@ -96,7 +121,7 @@ export function useGameplay(game: {
             !event.code.match(/[fF]/)
           ) {
             console.log(event.code);
-            const numberPressed = Number(event.code.replace(/[a-zA-Z]/g, ""))
+            const numberPressed = Number(event.code.replace(/[a-zA-Z]/g, ""));
             if (event.shiftKey) {
               deleteCell();
               setCandidates((ps) =>
@@ -104,9 +129,7 @@ export function useGameplay(game: {
                   row.map((e, j) =>
                     i === currentCoords.row && j === currentCoords.col
                       ? e.map((bool, x) =>
-                        x === numberPressed - 1
-                          ? !bool
-                          : bool,
+                        x === numberPressed - 1 ? !bool : bool,
                       )
                       : e,
                   ),
@@ -122,9 +145,22 @@ export function useGameplay(game: {
                   ),
                 ),
               );
+              setGameHistory((ps) => [
+                {
+                  coords: currentCoords,
+                  previousCell:
+                    currentGame[currentCoords.row][currentCoords.col],
+                  newCell: numberPressed,
+                },
+                ...ps,
+              ]);
               // see if error
-              if (conflicts[currentCoords.row][currentCoords.col].includes(numberPressed)) {
-                setErrorsCounter((ps) => ps + 1)
+              if (
+                conflicts[currentCoords.row][currentCoords.col].includes(
+                  numberPressed,
+                )
+              ) {
+                setErrorsCounter((ps) => ps + 1);
               }
             }
           }
@@ -137,11 +173,10 @@ export function useGameplay(game: {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [currentCoords, candidates]);
+  }, [currentCoords, candidates, currentGame]);
 
   return {
     currentGame,
-    setCurrentGame,
     currentCoords,
     candidates,
     conflicts,
