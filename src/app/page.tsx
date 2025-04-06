@@ -5,7 +5,7 @@ import { Board } from "@/components/Board";
 import { Button } from "@/components/Button";
 import { useSettings } from "@/hooks/useSettings";
 import { useTimer } from "@/hooks/useTimer";
-import { camelCaseToTitleCase } from "@/lib/utils";
+import { camelCaseToTitleCase, secondsToHMS } from "@/lib/utils";
 import { InputWithLabel } from "@/components/InputWithLabel";
 
 const game = {
@@ -72,14 +72,7 @@ export default function Home() {
         />
         <div>
           <p>
-            Timer: {Math.floor(timer.timer / 60)}:
-            {(
-              timer.timer -
-              60 * Math.floor(timer.timer / 60)
-            ).toLocaleString("en-US", {
-              minimumIntegerDigits: 2,
-              useGrouping: false,
-            })}
+            Timer: {secondsToHMS(timer.timer)}
           </p>
           <p>Errors: {errorsCounter}</p>
           <button onClick={startStopTimer}>Start/Stop</button>
