@@ -1,21 +1,34 @@
-import { ISettings } from "@/models/models";
+import { ISettings, IToggles } from "@/models/models";
 import { useState } from "react";
 
 export function useSettings() {
   const [settings, setSettings] = useState<ISettings>({
-    highlightConflicts: true,
-    highlightRow: true,
-    highlightCol: true,
-    highlightBox: true,
-    highlightIdenticalNums: true,
-    showTimer: true,
-    showErrorCounter: true,
-    autoCandidate: false,
+    togles: {
+      highlightConflicts: true,
+      highlightRow: true,
+      highlightCol: true,
+      highlightBox: true,
+      highlightIdenticalNums: true,
+      showTimer: true,
+      showErrorCounter: true,
+      autoCandidate: false,
+    },
+    chars: "digits",
   });
 
-  const handleChangeSetting = (setting: keyof ISettings) => {
-    setSettings((ps) => ({ ...ps, [setting]: !ps[setting] }));
+  const handleToggle = (toggle: keyof IToggles) => {
+    setSettings((ps) => ({
+      ...ps,
+      togles: { ...ps.togles, [toggle]: !ps.togles[toggle] },
+    }));
   };
 
-  return { settings, handleChangeSetting };
+  const handleCharChange = (value: ISettings["chars"]) => {
+    setSettings((ps) => ({
+      ...ps,
+      chars: value,
+    }));
+  };
+
+  return { settings, handleToggle, handleCharChange };
 }

@@ -1,5 +1,5 @@
 "use client";
-import { emptyCell, ISettings } from "@/models/models";
+import { emptyCell, ISettings, IToggles } from "@/models/models";
 import { useGameplay } from "@/hooks/useGameplay";
 import { Board } from "@/components/Board";
 import { Button } from "@/components/Button";
@@ -44,7 +44,7 @@ export default function Home() {
     resetBoard,
     showSolution,
   } = useGameplay(game);
-  const { settings, handleChangeSetting } = useSettings();
+  const { settings, handleToggle, handleCharChange } = useSettings();
   const { timer, startStopTimer, resetTimer } = useTimer();
 
   return (
@@ -56,7 +56,7 @@ export default function Home() {
           currentGame={currentGame}
           currentCoords={currentCoords}
           candidates={
-            settings.autoCandidate
+            settings.togles.autoCandidate
               ? conflicts.map((row) =>
                 row.map((e) =>
                   Array(9)
@@ -71,28 +71,37 @@ export default function Home() {
           settings={settings}
         />
         <div>
-          <p>
-            Timer: {secondsToHMS(timer.timer)}
-          </p>
+          <p>Timer: {secondsToHMS(timer.timer)}</p>
           <p>Errors: {errorsCounter}</p>
           <button onClick={startStopTimer}>Start/Stop</button>
           <button onClick={resetTimer}>Reset</button>
           <div className="flex flex-col">
             <p>Settings</p>
-            {Object.keys(settings).map((key) => (
+            {Object.keys(settings.togles).map((key) => (
               <InputWithLabel
                 key={key}
-                checked={settings[key as keyof ISettings]}
+                checked={settings.togles[key as keyof IToggles]}
                 id={key}
                 name={key}
                 labelText={camelCaseToTitleCase(key)}
-                onChange={() => handleChangeSetting(key as keyof ISettings)}
+                onChange={() => handleToggle(key as keyof IToggles)}
               />
             ))}
+            <select
+              onChange={(e) =>
+                handleCharChange(e.target.value as ISettings["chars"])
+              }
+            >
+              <option value={"digits" as ISettings["chars"]}>Digits</option>
+              <option value={"kanji" as ISettings["chars"]}>Kanji</option>
+            </select>
           </div>
         </div>
         <Button text="Reset" onClick={resetBoard} />
-        <Button text="check" onClick={() => console.log("I'm only a test button :(")} />
+        <Button
+          text="check"
+          onClick={() => console.log("I'm only a test button :(")}
+        />
         <Button text="Show Answer" onClick={showSolution} />
       </div>
     </>

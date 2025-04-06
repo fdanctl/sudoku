@@ -5,19 +5,24 @@ export namespace BoardTypes {
 }
 
 export interface ICoords {
-  row: number,
-  col: number,
+  row: number;
+  col: number;
+}
+
+export interface IToggles {
+  highlightConflicts: boolean;
+  highlightRow: boolean;
+  highlightCol: boolean;
+  highlightBox: boolean;
+  highlightIdenticalNums: boolean;
+  showTimer: boolean;
+  showErrorCounter: boolean;
+  autoCandidate: boolean;
 }
 
 export interface ISettings {
-  highlightConflicts: boolean,
-  highlightRow: boolean,
-  highlightCol: boolean,
-  highlightBox: boolean,
-  highlightIdenticalNums: boolean,
-  showTimer: boolean,
-  showErrorCounter: boolean,
-  autoCandidate: boolean,
+  togles: IToggles;
+  chars: "digits" | "kanji";
 }
 
 export interface IGameHistory {
