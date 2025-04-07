@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { BoardTypes, emptyCell, ICoords, IGameHistory } from "@/models/models";
+import { BoardTypes, ICoords, IGameHistory } from "@/models/models";
 import { seeConflicts } from "@/lib/utils";
+import { emptyCell } from "@/constants/constants";
 
 export function useGameplay(game: {
   board: BoardTypes.Board;

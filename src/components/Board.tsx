@@ -1,4 +1,5 @@
-import { BoardTypes, emptyCell, ICoords, ISettings } from "@/models/models";
+import { emptyCell } from "@/constants/constants";
+import { BoardTypes, ICoords, ISettings } from "@/models/models";
 
 export function Board({
   baseBoard,

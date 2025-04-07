@@ -30,5 +30,3 @@ export interface IGameHistory {
   previousCell: BoardTypes.Cell;
   newCell: BoardTypes.Cell;
 }
-
-export const emptyCell: BoardTypes.EmptyCell = "";

@@ -1,4 +1,5 @@
-import { BoardTypes, emptyCell, ICoords } from "@/models/models";
+import { emptyCell } from "@/constants/constants";
+import { BoardTypes, ICoords } from "@/models/models";
 
 export const seeConflicts = (board: BoardTypes.Board, coords: ICoords) => {
   // collumn
