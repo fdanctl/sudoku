@@ -11,6 +11,8 @@ import { game, themes } from "@/constants/constants";
 import { useEffect } from "react";
 
 export default function Home() {
+  const { settings, handleToggle, handleCharChange } = useSettings();
+  const { timer, startStopTimer, resetTimer } = useTimer();
   const {
     currentGame,
     currentCoords,
@@ -20,9 +22,7 @@ export default function Home() {
     handleClick,
     resetBoard,
     showSolution,
-  } = useGameplay(game);
-  const { settings, handleToggle, handleCharChange } = useSettings();
-  const { timer, startStopTimer, resetTimer } = useTimer();
+  } = useGameplay(timer.active, game);
 
   useEffect(() => {
     if (JSON.stringify(currentGame) === JSON.stringify(game.solution)) {
@@ -149,7 +149,11 @@ export default function Home() {
               />
             </div>
             <div className="mt-1">
-              <Button style="w-full" text="Show Answer" onClick={showSolution} />
+              <Button
+                style="w-full"
+                text="Show Answer"
+                onClick={showSolution}
+              />
             </div>
           </div>
         </div>

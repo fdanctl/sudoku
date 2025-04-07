@@ -3,10 +3,13 @@ import { BoardTypes, ICoords, IGameHistory } from "@/models/models";
 import { seeConflicts } from "@/lib/utils";
 import { emptyCell } from "@/constants/constants";
 
-export function useGameplay(game: {
-  board: BoardTypes.Board;
-  solution: Number[][];
-}) {
+export function useGameplay(
+  isGameOn: boolean,
+  game: {
+    board: BoardTypes.Board;
+    solution: Number[][];
+  },
+) {
   // current game state
   const [currentGame, setCurrentGame] = useState<BoardTypes.Board>(game.board);
 
@@ -39,12 +42,10 @@ export function useGameplay(game: {
   const handleChangeCell = (coords: ICoords, value: BoardTypes.Cell) => {
     setCurrentGame((ps) =>
       ps.map((row, i) =>
-        row.map((e, j) =>
-          i === coords.row && j === coords.col ? value : e,
-        ),
+        row.map((e, j) => (i === coords.row && j === coords.col ? value : e)),
       ),
     );
-  }
+  };
 
   // mouse support
   const handleClick = (row: number, col: number) => {
@@ -61,7 +62,7 @@ export function useGameplay(game: {
   };
 
   const deleteCell = () => {
-    handleChangeCell(currentCoords, emptyCell)
+    handleChangeCell(currentCoords, emptyCell);
     setGameHistory((ps) => [
       {
         coords: currentCoords,
@@ -125,7 +126,10 @@ export function useGameplay(game: {
             // go to prev coords
             setCurrentCoords(gameHistory[0].coords);
             // set prev cell
-            handleChangeCell(gameHistory[0].coords, gameHistory[0].previousCell)
+            handleChangeCell(
+              gameHistory[0].coords,
+              gameHistory[0].previousCell,
+            );
             // remove last move from history
             setGameHistory((ps) => [...ps].slice(1));
           }
@@ -136,7 +140,7 @@ export function useGameplay(game: {
           if (
             (currentNum === emptyCell ||
               currentNum !==
-                game.board[currentCoords.row][currentCoords.col]) &&
+              game.board[currentCoords.row][currentCoords.col]) &&
             event.code.match(/[1-9]/) &&
             !event.code.match(/[fF]/)
           ) {
@@ -151,15 +155,15 @@ export function useGameplay(game: {
                   row.map((e, j) =>
                     i === currentCoords.row && j === currentCoords.col
                       ? e.map((bool, x) =>
-                          x === numberPressed - 1 ? !bool : bool,
-                        )
+                        x === numberPressed - 1 ? !bool : bool,
+                      )
                       : e,
                   ),
                 ),
               );
-            // ... shiftKey is not pressed, change cell
+              // ... shiftKey is not pressed, change cell
             } else {
-              handleChangeCell(currentCoords, numberPressed)
+              handleChangeCell(currentCoords, numberPressed);
               setGameHistory((ps) => [
                 {
                   coords: currentCoords,
@@ -183,7 +187,7 @@ export function useGameplay(game: {
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
+    isGameOn && document.addEventListener("keydown", handleKeyDown);
 
     // removeEventListener on umounting when the effect re-runs
     // to avoid multiple listeners run simultaneously
