@@ -24,7 +24,7 @@ export function Board({
 
   const styleTail = (e: BoardTypes.Cell, row: number, col: number) => {
     const textColor =
-      e !== emptyCell && conflicts[row][col].includes(e)
+      e !== emptyCell && conflicts[row][col].includes(e) && settings.togles.highlightConflicts
         ? "text-conflict "
         : "";
     const backgroundColor =
