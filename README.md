@@ -32,9 +32,9 @@ A straightforward Sudoku, perfect for beginners and experts.
 
 1. Clone the repository:
 
-   ```
+```
    git clone
-   ```
+```
 
 2. Navigate to the project directory:
 
