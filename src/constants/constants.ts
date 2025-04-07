@@ -1,4 +1,4 @@
-import { BoardTypes } from "@/models/models";
+import { BoardTypes, ISettings } from "@/models/models";
 
 export const emptyCell: BoardTypes.EmptyCell = "";
 
@@ -26,3 +26,34 @@ export const game = {
     [3, 4, 5, 2, 8, 6, 1, 7, 9],
   ],
 };
+
+export const charMap = new Map([
+  [
+    "digits" as ISettings["chars"],
+    new Map([
+      [1, "1"],
+      [2, "2"],
+      [3, "3"],
+      [4, "4"],
+      [5, "5"],
+      [6, "6"],
+      [7, "7"],
+      [8, "8"],
+      [9, "9"],
+    ]),
+  ],
+  [
+    "kanji" as ISettings["chars"],
+    new Map([
+      [1, "一"],
+      [2, "二"],
+      [3, "三"],
+      [4, "四"],
+      [5, "五"],
+      [6, "六"],
+      [7, "七"],
+      [8, "八"],
+      [9, "九"],
+    ]),
+  ],
+]);
