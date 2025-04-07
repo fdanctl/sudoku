@@ -1,22 +1,96 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #181a1b;
+  --foreground: #ededed;
+  --outerBorderColor: #867c6e;
+  --innerBorderColor: #4d5457;
+  --conflict: #ff1a1a;
+  --selected: #39aa4a;
+  --identical: #408049;
+  --highlight: #39553d;
+  --disabled: #2a2e2f;
+  --default: #181a1b;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-outerBorderColor: var(--outerBorderColor);
+  --color-innerBorderColor: var(--innerBorderColor);
+  --color-conflict: var(--conflict);
+  --color-selected: var(--selected);
+  --color-identical: var(--identical);
+  --color-highlight: var(--highlight);
+  --color-disabled: var(--disabled);
+  --color-default: var(--default);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #253237;
-    --foreground: #ededed;
-  }
+.dark-green {
+  --background: #181a1b;
+  --foreground: #ededed;
+  --outerBorderColor: #867c6e;
+  --innerBorderColor: #4d5457;
+  --conflict: #ff1a1a;
+  --selected: #39aa4a;
+  --identical: #408049;
+  --highlight: #39553d;
+  --disabled: #2a2e2f;
+  --default: #181a1b;
+}
+
+.dark-orange {
+  --background: #181a1b;
+  --foreground: #ededed;
+  --outerBorderColor: #867c6e;
+  --innerBorderColor: #4d5457;
+  --conflict: #ff1a1a;
+  --selected: #c97c00;
+  --identical: #8d5701;
+  --highlight: #3e2f06;
+  --disabled: #2a2e2f;
+  --default: #181a1b;
+}
+
+.blue-mono-light {
+  --background: #253237;
+  --foreground: #ededed;
+  --outerBorderColor: #c2dfe3;
+  --innerBorderColor: #c2dfe3;
+  --conflict: #ff0000;
+  --selected: #265569;
+  --identical: #2a6f8c;
+  --highlight: #637f8c;
+  --disabled: #5c6b73;
+  --default: #9db4c0;
+}
+
+.blue-mono-dark {
+  --background: #253237;
+  --foreground: #ededed;
+  --outerBorderColor: #424a4e;
+  --innerBorderColor: #424a4e;
+  --conflict: #ff1a1a;
+  --selected: #1e4454;
+  --identical: #225970;
+  --highlight: #4f6670;
+  --disabled: #4e5458;
+  --default: #3a4f5a;
+}
+
+.forest-green {
+  --background: #2b332b;
+  --foreground: #ededed;
+  --outerBorderColor: #424a4e;
+  --innerBorderColor: #424a4e;
+  --conflict: #ff1a1a;
+  --selected: #4b5539;
+  --identical: #96d424;
+  --highlight: #71ad01;
+  --disabled: #39553c;
+  --default: #39aa44;
 }
 
 body {
