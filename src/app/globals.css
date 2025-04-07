@@ -56,7 +56,7 @@
 
 .blue-mono-light {
   --background: #253237;
-  --foreground: #ededed;
+  --foreground: #EFFFC7;
   --outerBorderColor: #c2dfe3;
   --innerBorderColor: #c2dfe3;
   --conflict: #ff0000;
@@ -78,19 +78,6 @@
   --highlight: #4f6670;
   --disabled: #4e5458;
   --default: #3a4f5a;
-}
-
-.forest-green {
-  --background: #2b332b;
-  --foreground: #ededed;
-  --outerBorderColor: #424a4e;
-  --innerBorderColor: #424a4e;
-  --conflict: #ff1a1a;
-  --selected: #4b5539;
-  --identical: #96d424;
-  --highlight: #71ad01;
-  --disabled: #39553c;
-  --default: #39aa44;
 }
 
 body {

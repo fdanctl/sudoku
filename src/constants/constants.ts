@@ -63,5 +63,4 @@ export const themes = [
   "dark-orange",
   "blue-mono-light",
   "blue-mono-dark",
-  "forest-green",
 ];
