@@ -1,20 +1,9 @@
+import { defaultConfigs } from "@/config/theme";
 import { ISettings, IToggles } from "@/models/models";
 import { useState } from "react";
 
 export function useSettings() {
-  const [settings, setSettings] = useState<ISettings>({
-    togles: {
-      highlightConflicts: true,
-      highlightRow: true,
-      highlightCol: true,
-      highlightBox: true,
-      highlightIdenticalNumbers: true,
-      showTimer: true,
-      showErrorCounter: true,
-      autoCandidate: false,
-    },
-    chars: "digits",
-  });
+  const [settings, setSettings] = useState<ISettings>(defaultConfigs);
 
   const handleToggle = (toggle: keyof IToggles) => {
     setSettings((ps) => ({
