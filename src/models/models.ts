@@ -14,7 +14,7 @@ export interface IToggles {
   highlightRow: boolean;
   highlightCol: boolean;
   highlightBox: boolean;
-  highlightIdenticalNums: boolean;
+  highlightIdenticalNumbers: boolean;
   showTimer: boolean;
   showErrorCounter: boolean;
   autoCandidate: boolean;

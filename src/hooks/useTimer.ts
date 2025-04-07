@@ -9,7 +9,7 @@ export function useTimer() {
   };
 
   const resetTimer = () => {
-    setTimer({ active: false, timer: 0 });
+    setTimer({ active: true, timer: 0 });
   };
 
   useEffect(() => {

@@ -8,7 +8,7 @@ export function useSettings() {
       highlightRow: true,
       highlightCol: true,
       highlightBox: true,
-      highlightIdenticalNums: true,
+      highlightIdenticalNumbers: true,
       showTimer: true,
       showErrorCounter: true,
       autoCandidate: false,

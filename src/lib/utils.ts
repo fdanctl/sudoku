@@ -53,3 +53,7 @@ export const secondsToHMS = (seconds: number) => {
 
   return `${h > 0 ? h + ":" : ""}${h > 0 ? m.toLocaleString("en-US", doubleDigitsOption) : m}:${s}`;
 };
+
+export const changeTheme = (theme: string) => {
+  document.documentElement.className = theme;
+};

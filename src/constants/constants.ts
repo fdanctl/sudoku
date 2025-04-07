@@ -57,3 +57,11 @@ export const charMap = new Map([
     ]),
   ],
 ]);
+
+export const themes = [
+  "dark-green",
+  "dark-orange",
+  "blue-mono-light",
+  "blue-mono-dark",
+  "forest-green",
+];
