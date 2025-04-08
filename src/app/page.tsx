@@ -19,6 +19,7 @@ export default function Home() {
     candidates,
     conflicts,
     errorsCounter,
+    resetErrors,
     handleClick,
     resetBoard,
     showSolution,
@@ -141,6 +142,7 @@ export default function Home() {
                 onClick={() => {
                   resetBoard();
                   resetTimer();
+                  resetErrors();
                 }}
               />
               <Button

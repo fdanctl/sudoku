@@ -39,6 +39,8 @@ export function useGameplay(
 
   const currentNum = currentGame[currentCoords.row][currentCoords.col];
 
+  const resetErrors = () => setErrorsCounter(0);
+
   const handleChangeCell = (coords: ICoords, value: BoardTypes.Cell) => {
     setCurrentGame((ps) =>
       ps.map((row, i) =>
@@ -202,6 +204,7 @@ export function useGameplay(
     candidates,
     conflicts,
     errorsCounter,
+    resetErrors,
     handleClick,
     resetBoard,
     showSolution,
